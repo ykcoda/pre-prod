@@ -8,4 +8,4 @@ seller = APIRouter(prefix="/sellers", tags=["Sellers"])
 
 @seller.post("/")
 async def register_seller(seller_data: SellerCreate):
-    pass
+    print(seller_data)
