@@ -15,7 +15,6 @@ class DatabaseSettings(BaseSettings):
     POSTGRES_USER: str = os.getenv("POSTGRES_USER") or ""
     POSTGRES_PASS: str = os.getenv("POSTGRES_PASS") or ""
 
-    
     model_config = _base_config
 
     # Database Url
@@ -24,6 +23,17 @@ class DatabaseSettings(BaseSettings):
         return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASS}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
 
 
+# Security Settings for JWT
+class SecuritySettings(BaseSettings):
+    JWT_ALGORITHM: str = os.getenv("") or ""
+    JWT_SCRET: str = os.getenv("") or ""
+
+    model_config = _base_config
+
+
 # Instatiating Database Settings
 db_settings = DatabaseSettings()
 
+
+# Instantiating Security Settings
+security_settings = SecuritySettings()
