@@ -1,8 +1,8 @@
 from pydantic import EmailStr
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel
 
 
 class User(SQLModel):
     name: str
     email: EmailStr
-    password: str  = Field(exclude=True)
+    
