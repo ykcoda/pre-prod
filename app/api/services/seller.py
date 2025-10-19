@@ -1,13 +1,13 @@
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from .user import UserService
+# from .user import UserService
 
 
-class SellerService(UserService):
+# class SellerService(UserService):
     
-    def __init__(self, model, session: AsyncSession):
-        super().__init__(model, session)
+#     def __init__(self, model, session: AsyncSession):
+#         super().__init__(model, session)
         
     
-    async def add_seller(self, data):
-        pass
+#     async def add_seller(self, data):
+#         pass
