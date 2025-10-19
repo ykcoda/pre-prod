@@ -7,7 +7,7 @@ from sqlmodel import Field, Column
 from .user import User
 
 
-class DeliverPartners(User):
+class DeliverPartners(User, table=True):
     __tablename__ = "delivery_partners"
 
     id: UUID = Field(default_factory=uuid4, primary_key=True)
