@@ -1,13 +1,12 @@
 from uuid import UUID, uuid4
 from datetime import datetime
-
 from sqlalchemy import ARRAY, INTEGER
 from sqlmodel import Field, Column
 
 from .user import User
 
 
-class DeliverPartners(User, table=True):
+class DeliveryPartners(User, table=True):
     __tablename__ = "delivery_partners"
 
     id: UUID = Field(default_factory=uuid4, primary_key=True)
