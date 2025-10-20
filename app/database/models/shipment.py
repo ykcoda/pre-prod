@@ -1,7 +1,12 @@
 from enum import Enum
 from uuid import UUID, uuid4
+from typing import TYPE_CHECKING
 from datetime import datetime, timedelta
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
+
+if TYPE_CHECKING:
+    from .seller import Seller
+    from .delivery_partner import DeliveryPartners
 
 
 class ShipmentStatus(str, Enum):
@@ -23,3 +28,13 @@ class Shipment(SQLModel, table=True):
         default_factory=lambda: datetime.now() + timedelta(days=2)
     )
     created_at: datetime = Field(default_factory=lambda: datetime.now())
+
+    seller_id: UUID = Field(foreign_key="sellers.id")
+    seller: "Seller" = Relationship(
+        back_populates="shipments", sa_relationship_kwargs={"lazy": "selectin"}
+    )
+
+    partner_id: UUID = Field(foreign_key="delivery_partners.id")
+    partner: "DeliveryPartners" = Relationship(
+        back_populates="shipments", sa_relationship_kwargs={"lazy": "selectin"}
+    )
