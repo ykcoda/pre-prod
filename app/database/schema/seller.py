@@ -15,13 +15,3 @@ class SellerRead(SellerBase):
 
 class SellerCreate(SellerBase):
     password: str
-
-    model_config = {
-        "json_schema_extra": {
-            "example": {
-                "name": "Jame Bright",
-                "email": "jbright@yahoo.com",
-                "password": "*****",
-            }
-        }
-    }

@@ -15,14 +15,7 @@ class DeliveryPartnerRead(DeliveryPartnerBase):
 
 class DeliveryPartnerCreate(DeliveryPartnerBase):
     password: str
+    servicable_zip_codes: list[int]
+    max_handling_capacity: int
     
-    model_config = {
-        "json_schema_extra": {
-            "example": {
-                "name": "Jame Bright",
-                "email": "jbright@yahoo.com",
-                "password": "*****"
-            }
-        }
-    }
-
+    
