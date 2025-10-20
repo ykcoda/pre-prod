@@ -17,7 +17,7 @@ DB_MAIN_SESSION_DEP = Annotated[AsyncSession, Depends(get_database_session)]
 
 
 async def get_shipment_service(session: DB_MAIN_SESSION_DEP):
-    return ShipmentService(session)
+    return ShipmentService(session, DeliveryPartnerService(session))
 
 
 SHIPMENT_SERVICE_DEP = Annotated[ShipmentService, Depends(get_shipment_service)]

@@ -1,5 +1,7 @@
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select, any_
+from fastapi import HTTPException, status
+from app.database.models.shipment import Shipment
 from .user import UserService
 from app.database.models.delivery_partner import DeliveryPartners
 from app.database.schema.delivery_partner import DeliveryPartnerCreate
@@ -23,3 +25,18 @@ class DeliveryPartnerService(UserService):
             )
         )
         return result.all()
+
+    async def assign_shipment(self, shipment: Shipment):
+        eligible_partners = await self.get_delivery_partner_by_zipcode(
+            shipment.destination
+        )
+
+        for partner in eligible_partners:
+            if partner.current_handling_capacity > 0:
+                partner.shipments.append(shipment)
+                return partner
+
+        raise HTTPException(
+            status_code=status.HTTP_406_NOT_ACCEPTABLE,
+            detail="No delivery partner is available",
+        )
