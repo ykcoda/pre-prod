@@ -11,7 +11,8 @@ from sqlmodel import SQLModel
 
 from app.config import db_settings
 from app.database.models.seller import Seller  # noqa
-from app.database.models.delivery_partner import DeliverPartners  # noqa
+from app.database.models.delivery_partner import DeliveryPartners  # noqa
+from app.database.models.shipment import Shipment  # noqa
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
