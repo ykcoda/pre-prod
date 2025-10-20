@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
 from app.database.schema.delivery_partner import DeliveryPartnerCreate
-from app.api.dependency.common import PARTNER_SERVICE_DEP
+from app.api.dependency.common import PARTNER_SERVICE_DEP, LOGGED_IN_PARTNER
 
 
 partner = APIRouter(prefix="/partners", tags=["Delivery Partner"])
@@ -14,6 +14,7 @@ async def register_partner(
     partner_data: DeliveryPartnerCreate,
     service: PARTNER_SERVICE_DEP,
 ):
+
     return await service.add_partner(partner_data)
 
 
@@ -27,6 +28,6 @@ async def partner_login(
 
 
 @partner.get("/dashboard")
-async def get_dashboard():
+async def get_dashboard(logged_in_partner: LOGGED_IN_PARTNER):
 
-    return {"DETAILS": "PARTNER DASHBOARD"}
+    return logged_in_partner
