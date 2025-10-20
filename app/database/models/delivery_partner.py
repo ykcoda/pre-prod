@@ -1,9 +1,13 @@
 from uuid import UUID, uuid4
+from typing import TYPE_CHECKING
 from datetime import datetime
 from sqlalchemy import ARRAY, INTEGER
-from sqlmodel import Field, Column
+from sqlmodel import Field, Column, Relationship
 
 from .user import User
+
+if TYPE_CHECKING:
+    from .shipment import Shipment
 
 
 class DeliveryPartners(User, table=True):
@@ -14,3 +18,7 @@ class DeliveryPartners(User, table=True):
     servicable_zip_codes: list[int] = Field(sa_column=Column(ARRAY(INTEGER)))
     max_handling_capacity: int
     created_at: datetime = Field(default_factory=lambda: datetime.now())
+
+    shipments: list["Shipment"] = Relationship(
+        back_populates="partner", sa_relationship_kwargs={"lazy": "selectin"}
+    )

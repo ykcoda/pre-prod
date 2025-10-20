@@ -6,6 +6,7 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from app.api.core.security import SELLER_OAUTH2_SCHEME, PARTNER_OAUTH2_SCHEME
 from app.api.services.seller import SellerService
 from app.api.services.delivery_partner import DeliveryPartnerService
+from app.api.services.shipment import ShipmentService
 from app.database.models.seller import Seller
 from app.database.models.delivery_partner import DeliveryPartners
 from app.database.session import get_database_session
@@ -13,6 +14,13 @@ from app.utils import decode_access_token
 
 
 DB_MAIN_SESSION_DEP = Annotated[AsyncSession, Depends(get_database_session)]
+
+
+async def get_shipment_service(session: DB_MAIN_SESSION_DEP):
+    return ShipmentService(session)
+
+
+SHIPMENT_SERVICE_DEP = Annotated[ShipmentService, Depends(get_shipment_service)]
 
 
 async def get_seller_service(session: DB_MAIN_SESSION_DEP):
