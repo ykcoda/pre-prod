@@ -1,6 +1,6 @@
 from enum import Enum
 from uuid import UUID, uuid4
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 from datetime import datetime, timedelta
 from sqlmodel import SQLModel, Field, Relationship
 
@@ -34,7 +34,7 @@ class Shipment(SQLModel, table=True):
         back_populates="shipments", sa_relationship_kwargs={"lazy": "selectin"}
     )
 
-    partner_id: UUID = Field(foreign_key="delivery_partners.id")
+    partner_id: Optional[UUID] = Field(foreign_key="delivery_partners.id", default=None)
     partner: "DeliveryPartners" = Relationship(
         back_populates="shipments", sa_relationship_kwargs={"lazy": "selectin"}
     )

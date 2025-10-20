@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlmodel import Field, SQLModel
 
 from app.database.models.shipment import ShipmentStatus
@@ -19,4 +20,5 @@ class ShipmentCreate(ShipmentBase):
 
 
 class ShipmentUpdate(SQLModel):
-    status: ShipmentStatus
+    status: ShipmentStatus | None = Field(default=None)
+    estimated_delivery: datetime | None = Field(default=None)
