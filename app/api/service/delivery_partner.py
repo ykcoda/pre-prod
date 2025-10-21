@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
-
 from app.database.models.delivery_partner import DeliveryPartner
 from sqlmodel.ext.asyncio.session import AsyncSession
+
 
 from app.database.schema.delivery_partner import DeliveryPartnerCreate
 from .user import UserService

@@ -4,6 +4,7 @@ from typing import Annotated
 
 from app.api.service.delivery_partner import DeliveryPartnerService
 from app.api.service.seller import SellerService
+from app.api.service.shipment import ShipmentService
 from app.database.models.delivery_partner import DeliveryPartner
 from app.database.models.seller import Seller
 from app.database.session import get_db_session
@@ -49,7 +50,7 @@ async def get_logged_in_partner(
     session: DB_SESSION_DEP, token: Annotated[str, Depends(PARTNER_OAUTH2_SCHEME)]
 ):
     access_token = decode_access_code(token)
-    
+
     if not token or access_token is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -60,3 +61,10 @@ async def get_logged_in_partner(
 
 
 LOGGED_IN_PARTNER = Annotated[DeliveryPartner, Depends(get_logged_in_partner)]
+
+
+async def get_shipment_service(session: DB_SESSION_DEP):
+    return ShipmentService(session)
+
+
+SHIPMENT_SERVICE_DEP = Annotated[ShipmentService, Depends(get_shipment_service)]

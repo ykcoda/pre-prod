@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel
+from sqlmodel import SQLModel, select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 
@@ -10,6 +10,10 @@ class BaseService:
 
     async def _get(self, id: str):
         return await self.session.get(self.model, id)  # type:ignore
+
+    async def _get_all(self):
+        result = await self.session.exec(select(self.model))
+        return result.all()
 
     async def _add(self, entity: SQLModel):
         self.session.add(entity)
