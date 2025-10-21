@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
 from app.database.schema.seller import SellerCreate
-from app.api.dependencies.common import SELLER_SERVICE_DEP
+from app.api.dependencies.common import LOGGED_IN_SELLER_DEP, SELLER_SERVICE_DEP
 
 
 seller = APIRouter(prefix="/sellers", tags=["Sellers"])
@@ -24,3 +24,10 @@ async def seller_login(
 ):
     token = await service.get_token(login_data.username, login_data.password)
     return {"access_token": token, "token_type": "jwt"}
+
+
+@seller.get("/dashboard")
+async def get_dashboard(
+    seller: LOGGED_IN_SELLER_DEP,
+):
+    return {"id": seller.id, "logged in seller": seller.name}
