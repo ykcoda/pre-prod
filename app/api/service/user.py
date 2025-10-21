@@ -17,12 +17,19 @@ class UserService(BaseService):
         self.model = model
         self.session = session
 
+    async def get_user(self, user_id: str):
+        return await self._get(user_id)
+
     async def add_user(self, user_data: dict):
         new_user = self.model(
             **user_data, hashed_password=password_context.hash(user_data["password"])
         )  # type: ignore
 
         return await self._add(new_user)
+
+    async def update_user(self, user_data: User):  
+        return await self._update(user_data)# type: ignore
+        
 
     async def get_user_by_email(self, email) -> User | None:
         result = await self.session.exec(
@@ -39,5 +46,5 @@ class UserService(BaseService):
             )
 
         data = {"user": {"email": user.email, "id": str(user.id)}}
-        
+
         return request_access_code(data)
