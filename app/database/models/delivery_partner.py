@@ -1,6 +1,8 @@
 from datetime import datetime
 from sqlmodel import ARRAY, INTEGER, Column, Field, Relationship
 from uuid import UUID, uuid4
+
+from app.database.models.shipment import ShipmentStatus
 from .user import User
 from typing import TYPE_CHECKING
 
@@ -21,3 +23,5 @@ class DeliveryPartner(User, table=True):
     shipments: list["Shipment"] = Relationship(
         back_populates="partner", sa_relationship_kwargs={"lazy": "selectin"}
     )
+
+   

@@ -1,5 +1,4 @@
-from sqlmodel import Field, SQLModel
-from uuid import UUID
+from sqlmodel import Field, SQLModel 
 from app.database.models.shipment import ShipmentStatus
 
 
@@ -11,8 +10,7 @@ class ShipmentBase(SQLModel):
 
 
 class ShipmentCreate(ShipmentBase):
-    seller_id: UUID | None = Field(default=None)
-    partner_id: UUID | None = Field(default=None)
+    pass
 
 
 class ShipmentUpdate(SQLModel):
