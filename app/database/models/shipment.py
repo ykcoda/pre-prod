@@ -24,7 +24,7 @@ class Shipment(SQLModel, table=True):
     weight: float = Field(gt=0, le=25)
     destination: int
     status: ShipmentStatus
-    estimated_delivery: datetime = Field(default_factory=lambda: datetime.now() + timedelta(days=3))
+    estimated_delivery: datetime | None = Field(default_factory=lambda: datetime.now() + timedelta(days=3))
     created_at: datetime = Field(default_factory=lambda: datetime.now())
 
     seller_id: Optional[UUID] = Field(foreign_key="sellers.id", default=None)
