@@ -13,3 +13,8 @@ class SellerService(UserService):
 
     async def add_seller(self, seller_data: SellerCreate):
         return await self.add_user(seller_data.model_dump())
+
+    async def get_token(self, email, password):
+        return await self.get_user_access_token(email, password)
+        
+        
