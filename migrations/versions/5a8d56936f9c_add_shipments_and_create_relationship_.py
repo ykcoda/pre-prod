@@ -1,19 +1,20 @@
-"""Add the shipments table to database
+"""Add shipments and create relationship with seller and delivery_partners
 
-Revision ID: 0ee9c34d9e81
-Revises: 6829983cf332
-Create Date: 2025-10-20 13:41:08.147985
+Revision ID: 5a8d56936f9c
+Revises: 74cde4c9ed89
+Create Date: 2025-10-21 18:46:19.779089
 
 """
 from typing import Sequence, Union
-import sqlmodel 
+
 from alembic import op
 import sqlalchemy as sa
+import sqlmodel
 
 
 # revision identifiers, used by Alembic.
-revision: str = '0ee9c34d9e81'
-down_revision: Union[str, Sequence[str], None] = '6829983cf332'
+revision: str = '5a8d56936f9c'
+down_revision: Union[str, Sequence[str], None] = '74cde4c9ed89'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -27,8 +28,11 @@ def upgrade() -> None:
     sa.Column('weight', sa.Float(), nullable=False),
     sa.Column('destination', sa.Integer(), nullable=False),
     sa.Column('status', sa.Enum('placed', 'in_transit', 'out_for_delivery', 'delivered', name='shipmentstatus'), nullable=False),
-    sa.Column('estimated_delivery', sa.DateTime(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.Column('seller_id', sa.Uuid(), nullable=True),
+    sa.Column('partner_id', sa.Uuid(), nullable=True),
+    sa.ForeignKeyConstraint(['partner_id'], ['delivery_partners.id'], ),
+    sa.ForeignKeyConstraint(['seller_id'], ['sellers.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

@@ -1,13 +1,14 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 import os
 
-# Base config ref for  env varibles
+
 _base_config = SettingsConfigDict(
-    env_file="./app/.env", env_ignore_empty=True, extra="ignore"
+    env_file="./app/.env",
+    env_ignore_empty=True,
+    extra="ignore",
 )
 
 
-# Database settings class
 class DatabaseSettings(BaseSettings):
     POSTGRES_HOST: str = os.getenv("POSTGRES_HOST") or ""
     POSTGRES_PORT: int = int(os.getenv("POSTGRES_PORT") or 0)
@@ -17,23 +18,17 @@ class DatabaseSettings(BaseSettings):
 
     model_config = _base_config
 
-    # Database Url
     @property
     def DATABASE_URL(self):
         return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASS}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
 
 
-# Security Settings for JWT
 class SecuritySettings(BaseSettings):
-    JWT_ALGORITHM: str = os.getenv("") or ""
-    JWT_SCRET: str = os.getenv("") or ""
+    JWT_ALGORITHM: str = os.getenv("POSTGRES_HOST") or ""
+    JWT_SECRET: str = os.getenv("POSTGRES_HOST") or ""
 
     model_config = _base_config
 
 
-# Instatiating Database Settings
 db_settings = DatabaseSettings()
-
-
-# Instantiating Security Settings
 security_settings = SecuritySettings()
