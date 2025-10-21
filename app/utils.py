@@ -5,7 +5,7 @@ from datetime import timedelta, datetime, timezone
 from app.config import security_settings
 
 
-def encode_access_code(data: dict, expiry: timedelta = timedelta(hours=2)):
+def request_access_code(data: dict, expiry: timedelta = timedelta(hours=2)):
 
     return jwt.encode(
         payload={**data, "exp": datetime.now(timezone.utc) + expiry},
