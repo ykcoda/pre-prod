@@ -8,8 +8,14 @@ class BaseService:
         self.model = model
         self.session = session
 
+    async def _get(self, id: str):
+        return await self.session.get(self.model, id)  # type:ignore
+
     async def _add(self, entity: SQLModel):
         self.session.add(entity)
         await self.session.commit()
         await self.session.refresh(entity)
         return entity
+
+    async def _update(self, entity: SQLModel):
+        return await self._add(entity)
