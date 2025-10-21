@@ -1,12 +1,10 @@
 from pydantic import EmailStr
-from sqlmodel import Field, SQLModel
+from sqlmodel import ARRAY, INTEGER, Column, Field, SQLModel
 
 
-# Delivery Partner Base Schema
 class DeliveryPartnerBase(SQLModel):
     name: str
     email: EmailStr
-    password: str = Field(exclude=True)
 
 
 class DeliveryPartnerRead(DeliveryPartnerBase):
@@ -15,7 +13,12 @@ class DeliveryPartnerRead(DeliveryPartnerBase):
 
 class DeliveryPartnerCreate(DeliveryPartnerBase):
     password: str
-    servicable_zip_codes: list[int]
-    max_handling_capacity: int
-    
-    
+    max_capacity: int
+    servicable_zipcodes: list[int] = Field(sa_column=Column(ARRAY(INTEGER)))
+
+
+class DeliveryPartnerUpdate(SQLModel):
+    max_capacity: int | None = Field(default=None)
+    servicable_zipcodes: list[int] | None = Field(
+        sa_column=Column(ARRAY(INTEGER)), default=None
+    )
