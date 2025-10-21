@@ -1,5 +1,5 @@
 from pydantic import EmailStr
-from sqlmodel import Field, SQLModel
+from sqlmodel import SQLModel
 
 
 class User(SQLModel):
