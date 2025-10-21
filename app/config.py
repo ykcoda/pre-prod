@@ -23,5 +23,12 @@ class DatabaseSettings(BaseSettings):
         return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASS}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
 
 
-db_settings = DatabaseSettings()
+class SecuritySettings(BaseSettings):
+    JWT_ALGORITHM: str = os.getenv("POSTGRES_HOST") or ""
+    JWT_SECRET: str = os.getenv("POSTGRES_HOST") or ""
 
+    model_config = _base_config
+
+
+db_settings = DatabaseSettings()
+security_settings = SecuritySettings()
