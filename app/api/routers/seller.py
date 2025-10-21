@@ -30,4 +30,4 @@ async def seller_login(
 async def get_dashboard(
     seller: LOGGED_IN_SELLER_DEP,
 ):
-    return {"id": seller.id, "logged in seller": seller.name}
+    return {"Seller id": seller.id, "Seller name": seller.name}
