@@ -64,7 +64,7 @@ LOGGED_IN_PARTNER = Annotated[DeliveryPartner, Depends(get_logged_in_partner)]
 
 
 async def get_shipment_service(session: DB_SESSION_DEP):
-    return ShipmentService(session)
+    return ShipmentService(session, DeliveryPartnerService(session))
 
 
 SHIPMENT_SERVICE_DEP = Annotated[ShipmentService, Depends(get_shipment_service)]
