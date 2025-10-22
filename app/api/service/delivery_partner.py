@@ -1,8 +1,10 @@
 from fastapi import HTTPException, status
+from sqlmodel import any_, select
 from app.database.models.delivery_partner import DeliveryPartner
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 
+from app.database.models.shipment import Shipment
 from app.database.schema.delivery_partner import DeliveryPartnerCreate
 from .user import UserService
 
@@ -26,3 +28,19 @@ class DeliveryPartnerService(UserService):
             )
 
         return await self.update_user(partner.sqlmodel_update(partner_data))
+
+    async def get_eligible_partners(self, zipcode: int):
+        result = await self.session.exec(
+            select(DeliveryPartner).where( 
+                zipcode == any_(DeliveryPartner.servicable_zipcodes)
+            )
+        )
+        return result.all()
+
+    async def assign_shipment(self, shipment: Shipment):
+        eligible_partners = await self.get_eligible_partners(shipment.destination)
+
+        for partner in eligible_partners:
+            if partner.current_handling_capacity > 0:
+                partner.shipments.append(shipment)
+                return partner
