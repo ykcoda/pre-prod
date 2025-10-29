@@ -6,7 +6,6 @@ of the program
 """
 
 from abc import ABC, abstractmethod
-from cmath import rect
 
 
 class Shape(ABC):
@@ -17,47 +16,31 @@ class Shape(ABC):
 
 class Rectangle(Shape):
     def __init__(self, height: float = 0.0, width: float = 0.0):
-        self._height = height
-        self._width = width
+        self.height = height
+        self.width = width
 
-    @property
-    def width(self) -> float:
-        return self._width
-
-    @width.setter
-    def width(self, value):
-        self._width = value
-
-    @property
-    def height(self) -> float:
-        return self._height
-
-    @height.setter
-    def height(self, value):
-        self._height = value
-
-    def area(self):
+    def area(self) -> float:
         return self.width * self.height
 
 
-class Square(Rectangle):
+class Square(Shape):
     def __init__(self, side: float = 0):
-        super().__init__(side, side)
+        self.side = side
 
-    @Rectangle.width.setter
-    def width(self, value: float):
-        self._width = value
-        self._height = value
-
-    @Rectangle.height.setter
-    def height(self, value: float):
-        self._width = value
-        self._height = value
+    def area(self):
+        return self.side * self.side
 
 
-rectangle = Square()
+rectangle = Rectangle()
 rectangle.width = 5
 rectangle.height = 10
 
 print("Calcualted area is 5 * 10 = 50")
 print(rectangle.area())
+
+
+square = Square()
+square.side = 5
+
+print("Calcualted area is 5 * 5 = 25")
+print(square.area())
