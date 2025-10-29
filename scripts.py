@@ -1,14 +1,11 @@
 """
-Fragile Base Class Problem
-Is a software design issue that where changes made to a base class
-can break the functionality of derived classes. this problem occures to the
-tight coupling between base and derived classes in inheritance hierarchies
+The solid principle are 5 software design principles that help you 
+to write high quality, flexible, maitainable, reusable, testable and readable software 
 
-
-Key Points:
-1. Inheritance coupling
-2. Ripple Effect
-3. Limited Extensibility
-4. Brittle Software
-5. Mitigation Strategies
+S: Single Responsibility  (SRP)
+O: Open-Closed Principle (OCP)
+L: Liskov Substitution Principle (LSP)
+I: Interface Segregation Principle (ISP)
+D: Dependency Inversion Principle (DIP)
 """
+
