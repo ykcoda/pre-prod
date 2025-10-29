@@ -1,43 +1,23 @@
 """
-I: Interface Segregation Principle (ISP)
+D: Dependency Inversion Principle (DIP)
 
-Clients should not be forced to depend on interfaces they do not use.
+High-level modules should not depend on low-level modules. Both should
+depend pn abstractions.
 """
 
-from abc import ABC, abstractmethod
-import math
 
-class Shape2D(ABC):
-    @abstractmethod
-    def area(self):
-        pass
+class Engine:
+    def start(self):
+        print("Engine Started.")
 
 
-class Shape3D(ABC):
-    @abstractmethod
-    def area(self):
-        pass
+class Car:
+    def __init__(self):
+        self.engine = Engine()
 
-    @abstractmethod
-    def volume(self):
-        pass
-
-
-class Circle(Shape2D):
-    def __init__(self, radius):
-        self.radius = radius
-
-    def area(self):
-        return math.pi * self.radius**2
-
-
-class Shpere(Shape3D):
-    def __init__(self, radius):
-        self.radius = radius
-
-    def area(self):
-        return 4 * math.pi * self.radius**2
-
-    def volume(self):
-        return (4 / 3) * math.pi(self.radius**3)
-
+    def start(self):
+        self.engine.start()
+        print("Car Started")
+        
+car = Car()
+car.start()
