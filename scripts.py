@@ -1,43 +1,24 @@
-"""Encapsulation"""
+"""
+Abstraction
+Reduce complexity by hiding unnecessary details
+"""
 
-# class BadBankAccount:
-#     def __init__(self, balance: float):
-#         self.balance = balance
+class EmailService:
+    def _connect(self):
+        print("connecting to email server")
 
+    def _authenticate(self):
+        print("authenticating...")
 
-# account = BadBankAccount(0.0)
-# account.balance = -1
-# print(account.balance)
+    def send_email(self, message: str):
+        self._connect()
+        self._authenticate()
+        print(f"Email Sent: '{message}'")
+        self._disconnect()
 
-
-class BankAccount:
-    def __init__(self):
-        self._balance = 0.0
-
-    @property
-    def balance(self):
-        return self._balance
-
-    def deposit(self, amount: float):
-        if amount <= 0:
-            raise ValueError("Deposit amount must be positive")
-
-        self._balance += amount
-
-    def withdraw(self, amount: float):
-        if amount <= 0:
-            raise ValueError("Withdraw amount must be positive")
-        if amount > self._balance:
-            raise ValueError("Insufficient funds")
-
-        self._balance -= amount
+    def _disconnect(self):
+        print("disconnecting from email server.")
 
 
-account1 = BankAccount()
-print(account1.balance)
-account1.deposit(1.99)
-print(account1.balance)
-account1.withdraw(1)
-print(account1.balance)
-account1.withdraw(100)
-print(account1.balance)
+message1 = EmailService()
+message1.send_email("I love python programming....")
