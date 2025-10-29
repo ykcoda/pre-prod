@@ -1,42 +1,44 @@
 """
-S: Single Responsibility Principle (SRP) REFACTORING
-A class should have only one reason to change, meaning that it should have only one
-responsibility or purpose
+O: Open and Close Principle
+
+Software entities (classes, modules, functions, etc. ) should be open for extension but
+closed for modification
 """
 
-
-class EmailSender:
-    def send(self, recipient, message):
-        print(f"Sending email to {recipient}: {message}")
+from enum import Enum
+import math
 
 
-class User:
-    def __init__(self, username, email):
-        self.username = username
-        self.email = email
+class ShapeType(Enum):
+    CIRCLE = "circle"
+    RECTANGLE = "rectangle"
 
 
-class UserService:
-    def __init__(self):
-        pass
+class Shape:
 
-    def register(self, user):
-        print(f"Registring user {user.username}")
+    def __init__(
+        self,
+        shape_type: ShapeType,
+        radius: float = 0,
+        height: float = 0,
+        width: float = 0,
+    ):
+        self.type = shape_type
+        self.radius = radius
+        self.height = height
+        self.width = width
 
-        email_sender = EmailSender()
-        email_sender.send(user.email, f"Welcome to our platform, {user.username}!")
-
-    def update(self, user):
-        print(f"Updating user: {user.username}")
-
-    def delete(self, user):
-        print(f"Deleting user: {user.username}")
-
-
-user1 = User("YK", "yk@gmail.com")
-userService = UserService()
-userService.register(user1)
+    def calculate_area(self) -> float:
+        if self.type == ShapeType.CIRCLE:
+            return math.pi * self.radius**2
+        elif self.type == ShapeType.RECTANGLE:
+            return self.height * self.width
+        else:
+            raise ValueError("Unsupported shape type")
 
 
-user2 = User("Annie", "annie@gmail.com")
-userService.register(user2)
+circle = Shape(ShapeType.CIRCLE, radius=5)
+rect = Shape(ShapeType.RECTANGLE, height=4, width=6)
+
+print(f"Circle area: {circle.calculate_area()}")
+print(f"Reactangle area: {rect.calculate_area()}")
