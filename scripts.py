@@ -1,37 +1,10 @@
 """
-D: Dependency Inversion Principle (DIP)
+Dependency Injection (DI) offers several advantages in software development
 
-High-level modules should not depend on low-level modules. Both should
-depend pn abstractions.
+1. Decoupling
+2. Testability
+3. Flexibility
+4. Readability and Maitainability
+5. Reusability
+6. Scalability
 """
-
-from abc import ABC, abstractmethod
-
-
-class Engine(ABC):
-    @abstractmethod
-    def start(self):
-        pass
-
-
-class BasicEngine(Engine):
-    def start(self):
-        print("Basic Engine Started")
-
-
-class FastEngine(Engine):
-    def start(self):
-        print("Fast Engine Started")
-
-
-class Car:
-    def __init__(self, engine: Engine):
-        self.engine = engine
-
-    def start(self):
-        self.engine.start()
-        print("Car Started")
-
-
-car = Car(BasicEngine())
-car.start()
