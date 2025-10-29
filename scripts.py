@@ -1,24 +1,38 @@
 """
-Abstraction
-Reduce complexity by hiding unnecessary details
+Inheritance
+Creating new classes based on existing clasess
 """
 
-class EmailService:
-    def _connect(self):
-        print("connecting to email server")
+class Vehicle:
+    def __init__(self, brand, model, year):
+        self.brand = brand
+        self.model = model
+        self.year = year
 
-    def _authenticate(self):
-        print("authenticating...")
+    def start(self):
+        print("Vehicle is starting")
 
-    def send_email(self, message: str):
-        self._connect()
-        self._authenticate()
-        print(f"Email Sent: '{message}'")
-        self._disconnect()
-
-    def _disconnect(self):
-        print("disconnecting from email server.")
+    def stop(self):
+        print("Vehicle is stopping")
 
 
-message1 = EmailService()
-message1.send_email("I love python programming....")
+class Car(Vehicle):
+
+    def __init__(self, brand, model, year, number_of_doors, number_of_wheels):
+        super().__init__(brand, model, year)
+        self.number_of_doors = number_of_doors
+        self.number_of_wheels = number_of_wheels
+
+
+class Bike(Vehicle):
+    def __init__(self, brand, model, year, number_of_wheels):
+        super().__init__(brand, model, year)
+        self.number_of_wheels = number_of_wheels
+
+
+car = Car("Toyota", "Camery", 2025, 4, 4)
+bike = Bike("Honda", "Scoopy", 2018, 2)
+
+
+print(car.__dict__)
+print(bike.__dict__)
