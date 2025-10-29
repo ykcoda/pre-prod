@@ -17,23 +17,34 @@ class User:
 
 
 class UserService:
-    def register(self, user: User):
-        print(f"Registring user {user.username}")
+    def __init__(self, user: User):
+        self.user = user
 
+    def register(self):
+        print(f"Registring user {self.user.username}")
+        
         email_sender = EmailSender()
-        email_sender.send(user.email, f"Welcome to our platform, {user.username}!")
+        email_sender.send(
+            self.user.email, f"Welcome to our platform, {self.user.username}!"
+        )
 
-    def update(self, user: User):
-        print(f"Updating user: {user}")
+    def update(
+        self,
+    ):
+        print(f"Updating user: {self.user.username}")
 
-    def delete(self, user: User):
-        print(f"Deleting user: {user}")
-    
-    
-user1 = User("YK", "yk@gmail.com")  
-userService = UserService()
-userService.register(user1)
+    def delete(self):
+        print(f"Deleting user: {self.user.username}")
+
+
+user1 = User("YK", "yk@gmail.com")
+userService1 = UserService(user1)
+userService1.register()
+userService1.update()
+userService1.delete()
+
 
 user2 = User("Annie", "annie@gmail.com")
-userService1 = UserService()
-userService1.register(user2)
+userService2 = UserService(user2)
+userService2.register()
+userService2.update()
