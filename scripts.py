@@ -7,8 +7,13 @@ Clients should not be forced to depend on interfaces they do not use.
 from abc import ABC, abstractmethod
 import math
 
+class Shape2D(ABC):
+    @abstractmethod
+    def area(self):
+        pass
 
-class Shape(ABC):
+
+class Shape3D(ABC):
     @abstractmethod
     def area(self):
         pass
@@ -18,18 +23,15 @@ class Shape(ABC):
         pass
 
 
-class Circle(Shape):
+class Circle(Shape2D):
     def __init__(self, radius):
         self.radius = radius
 
     def area(self):
         return math.pi * self.radius**2
 
-    def volume(self):
-        raise NotImplementedError("Volume not applicable for 2D shapes.")
 
-
-class Shpere(Shape):
+class Shpere(Shape3D):
     def __init__(self, radius):
         self.radius = radius
 
