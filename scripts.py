@@ -1,87 +1,63 @@
 """
-O: Open and Close Principle
+L: Listov Substitution Principle (LSP)
 
-Software entities (classes, modules, functions, etc. ) should be open for extension but
-closed for modification
+Object of a superclass should be replacable with objects of its subclass without affecting the correctness
+of the program
 """
 
 from abc import ABC, abstractmethod
 from cmath import rect
-from enum import Enum
-import math
-
-
-class ShapeType(Enum):
-    CIRCLE = "circle"
-    RECTANGLE = "rectangle"
 
 
 class Shape(ABC):
     @abstractmethod
-    def calculate_area(self) -> float:
+    def area(self) -> float:
         pass
 
 
-class Circle(Shape):
-    def __init__(self, radius: float):
-        self.radius = radius
-
-    def calculate_area(self) -> float:
-        return math.pi * self.radius**2
-
-
 class Rectangle(Shape):
-    def __init__(self, height: float, width: float):
-        self.height = height
-        self.width = width
+    def __init__(self, height: float = 0.0, width: float = 0.0):
+        self._height = height
+        self._width = width
 
-    def calculate_area(self) -> float:
-        return self.height * self.width
+    @property
+    def width(self) -> float:
+        return self._width
 
+    @width.setter
+    def width(self, value):
+        self._width = value
 
-class Triangle(Shape):
-    def __init__(self, breath: float, height: float):
-        self.breath = breath
-        self.height = height
+    @property
+    def height(self) -> float:
+        return self._height
 
-    def calculate_area(self):
-        return 0.5 * self.breath * self.height
+    @height.setter
+    def height(self, value):
+        self._height = value
 
-
-circle = Circle(5)
-print(circle.calculate_area())
-
-rect = Rectangle(12, 5)  # noqa
-print(rect.calculate_area())
-
-
-trai = Triangle(12, 5)
-print(trai.calculate_area())
-# class Shape:
-
-#     def __init__(
-#         self,
-#         shape_type: ShapeType,
-#         radius: float = 0,
-#         height: float = 0,
-#         width: float = 0,
-#     ):
-#         self.type = shape_type
-#         self.radius = radius
-#         self.height = height
-#         self.width = width
-
-#     def calculate_area(self) -> float:
-#         if self.type == ShapeType.CIRCLE:
-#             return math.pi * self.radius**2
-#         elif self.type == ShapeType.RECTANGLE:
-#             return self.height * self.width
-#         else:
-#             raise ValueError("Unsupported shape type")
+    def area(self):
+        return self.width * self.height
 
 
-# circle = Shape(ShapeType.CIRCLE, radius=5)
-# rect = Shape(ShapeType.RECTANGLE, height=4, width=6)
+class Square(Rectangle):
+    def __init__(self, side: float = 0):
+        super().__init__(side, side)
 
-# print(f"Circle area: {circle.calculate_area()}")
-# print(f"Reactangle area: {rect.calculate_area()}")
+    @Rectangle.width.setter
+    def width(self, value: float):
+        self._width = value
+        self._height = value
+
+    @Rectangle.height.setter
+    def height(self, value: float):
+        self._width = value
+        self._height = value
+
+
+rectangle = Square()
+rectangle.width = 5
+rectangle.height = 10
+
+print("Calcualted area is 5 * 10 = 50")
+print(rectangle.area())
