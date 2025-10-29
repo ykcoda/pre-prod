@@ -1,25 +1,48 @@
-""" 
-Software Design Patterns
-
-Design patterns are proven, reusable solutions to common ploblems in 
-software design, providing templates or guidlines for structuring code 
-to solve recurring challenges in a consistent and efficient way.
-
-Why Design Patterns? 
-
-1. Reusable Solutions
-2. Standardized Terminology
-3. Scalability 
-4. Maintainability
-5. Performance
-6. Documentation
-7. Best Practices 
 """
-""" 
-Gang of Four (GoF) Design Patterns
-
-1. Creational: The different ways to create objects
-2. Structural: The relationship between those objects
-3. Behavioral: The interaction or communication between those objects 
-
+Behavioral: The interaction or communication between those objects
 """
+
+from enum import Enum
+
+
+class DocumentState(Enum):
+    DRAFT = 1
+    MODERATION = 2
+    PUBLISHED = 3
+
+
+class UserRoles(Enum):
+    READER = 1
+    EDITOR = 2
+    ADMIN = 3
+
+
+class Document:
+
+    def __init__(self, state: DocumentState, current_user_role: UserRoles):
+        self.state = state
+        self.current_user_role = current_user_role
+
+    def publish(self):
+        if self.state == DocumentState.DRAFT:
+            self.state = DocumentState.MODERATION
+
+        elif (
+            self.state == DocumentState.MODERATION
+            and self.current_user_role == UserRoles.ADMIN
+        ):
+            self.state = DocumentState.PUBLISHED
+
+        elif self.state == DocumentState.PUBLISHED:
+            # Do nothing
+            pass
+
+
+doc = Document(DocumentState.DRAFT, UserRoles.EDITOR)
+print(f"Initial state: {doc.state.name}")
+
+doc.publish()
+print(f"Initial state: {doc.state.name}")
+
+doc.publish()
+print(f"Initial state: {doc.state.name}")
