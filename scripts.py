@@ -6,6 +6,7 @@ of the program
 """
 
 from abc import ABC, abstractmethod
+import re
 
 
 class Shape(ABC):
@@ -44,3 +45,11 @@ square.side = 5
 
 print("Calcualted area is 5 * 5 = 25")
 print(square.area())
+
+
+def return_area(shape: Shape):
+    return shape.area()
+
+
+print(return_area(rectangle))
+print(return_area(square))
