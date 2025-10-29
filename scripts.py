@@ -1,55 +1,41 @@
 """
-L: Listov Substitution Principle (LSP)
+I: Interface Segregation Principle (ISP)
 
-Object of a superclass should be replacable with objects of its subclass without affecting the correctness
-of the program
+Clients should not be forced to depend on interfaces they do not use.
 """
 
 from abc import ABC, abstractmethod
-import re
+import math
 
 
 class Shape(ABC):
     @abstractmethod
-    def area(self) -> float:
+    def area(self):
+        pass
+
+    @abstractmethod
+    def volume(self):
         pass
 
 
-class Rectangle(Shape):
-    def __init__(self, height: float = 0.0, width: float = 0.0):
-        self.height = height
-        self.width = width
-
-    def area(self) -> float:
-        return self.width * self.height
-
-
-class Square(Shape):
-    def __init__(self, side: float = 0):
-        self.side = side
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
 
     def area(self):
-        return self.side * self.side
+        return math.pi * self.radius**2
+
+    def volume(self):
+        raise NotImplementedError("Volume not applicable for 2D shapes.")
 
 
-rectangle = Rectangle()
-rectangle.width = 5
-rectangle.height = 10
+class Shpere(Shape):
+    def __init__(self, radius):
+        self.radius = radius
 
-print("Calcualted area is 5 * 10 = 50")
-print(rectangle.area())
+    def area(self):
+        return 4 * math.pi * self.radius**2
 
+    def volume(self):
+        return (4 / 3) * math.pi(self.radius**3)
 
-square = Square()
-square.side = 5
-
-print("Calcualted area is 5 * 5 = 25")
-print(square.area())
-
-
-def return_area(shape: Shape):
-    return shape.area()
-
-
-print(return_area(rectangle))
-print(return_area(square))
