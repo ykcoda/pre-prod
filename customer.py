@@ -27,4 +27,5 @@ class Customer:
     def close_account(self, account: BankAccount):
         for acc in self.bank_accounts:
             if acc.id == account.id:
+                print(f"{acc.account_type.value}({acc.id}) account with ${acc.balance} closed")
                 self.bank_accounts.remove(acc)

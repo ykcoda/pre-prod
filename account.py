@@ -31,3 +31,5 @@ class BankAccount:
         if not self._is_amount_valid(amount):
             print(f"${amount} is an valid amount")
             return
+        self.balance -= amount
+        print(f"You withdrew ${amount}, your new balance is ${self.balance}")
